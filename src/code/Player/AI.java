@@ -24,4 +24,5 @@ public class AI extends Player {
                 System.out.println(Arrays.deepToString(grid.grid));
             }
     }
+
 }

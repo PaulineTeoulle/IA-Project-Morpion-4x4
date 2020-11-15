@@ -48,6 +48,7 @@ public class Grid extends Canvas {
         return cpt == 16;
     }
 
+
     //Getter pour avoir accès à des données
     public int getScale() {
         return scale;

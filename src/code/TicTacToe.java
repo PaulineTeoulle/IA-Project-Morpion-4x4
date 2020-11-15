@@ -32,6 +32,8 @@ public class TicTacToe extends Check {
                 root.getScene().heightProperty().divide(1));
     }
 
+
+
     //GamePlay
     public void gamePlay(MouseEvent mouseEvent) {
         //Récupération de l'ajustement de la grille

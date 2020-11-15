@@ -24,4 +24,5 @@ public class Human extends Player {
                 System.out.println(Arrays.deepToString(grid.grid));
             }
     }
+
 }

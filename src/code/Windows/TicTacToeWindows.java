@@ -35,4 +35,5 @@ public class TicTacToeWindows implements GameInterface {
         vBox.getChildren().addAll(new HBox(new VBox(restartButton)), grid);
         root.getChildren().add(vBox);
     }
+
 }

@@ -25,4 +25,5 @@ public abstract class Check {
                 || (grid.grid[3][0] == 2 && grid.grid[2][1] == 2 && grid.grid[1][2] == 2 && grid.grid[0][3] == 2);
     }
 
+
 }
