@@ -1,4 +1,5 @@
 package code;
+
 import code.Player.AI;
 import code.Player.Human;
 import code.Windows.Circle;
@@ -33,7 +34,6 @@ public class TicTacToe extends Check {
     }
 
 
-
     //GamePlay
     public void gamePlay(MouseEvent mouseEvent) {
         //Récupération de l'ajustement de la grille
@@ -43,39 +43,56 @@ public class TicTacToe extends Check {
         int row = (int) (mouseEvent.getY() / scale);
 
         //Check des coord dans la grille
-        if (!coordsAreInGrid(column, row, grid.getColumnCount(), grid.getRowCount())) return;
-        //Changement de tour
-        tour = (tour % 2) + 1;
-        grid.player = tour;
+        if (!coordsAreInGrid(column, row, grid.getColumnCount(), grid.getRowCount())) {
+            System.out.println("Les coordonnées ne sont pas dans la grille");
+            grid.label.setText("Les coordonnées ne sont pas dans la grille");
+        }
+        else {
 
-        //Si l'humain joue
-        if (tour == 1) {
-            human.row = row;
-            human.column = column;
-            human.play();
-            //Check de win
-            if (checkHumanWin(grid)) {
-                System.out.println("Human WON");
-                grid.label.setText("HUMAN WON");
+            if (grid.grid[column][row] == 1 || grid.grid[column][row] == 2) {
+                grid.label.setText("La place est déjà prise");
+            }
+            else {
+
+                grid.label.setText("");
+                //Changement de tour
+                tour = (tour % 2) + 1;
+                grid.player = tour;
+
+                //Si l'humain joue
+                if (tour == 1) {
+                    human.row = row;
+                    human.column = column;
+                    human.play();
+                    //Check de win
+                    if (checkHumanWin(grid)) {
+                        System.out.println("Human WON");
+                        grid.label.setText("HUMAN WON");
+                    }
+
+                }
+
+                //Si l'ia joue
+                if (tour == 2) {
+                    AI.row = row;
+                    AI.column = column;
+                    AI.play();
+                    //Check de win
+                    if (checkIaWin(grid)) {
+                        System.out.println("IA WON");
+                        grid.label.setText("IA WON");
+                    }
+
+                }
+
+                //Check de l'égalité
+                if (grid.gridIsFull()) {
+                    System.out.println("Egalité");
+                    grid.label.setText("EGALITE");
+                }
+
             }
         }
 
-        //Si l'ia joue
-        if (tour == 2) {
-            AI.row = row;
-            AI.column = column;
-            AI.play();
-            //Check de win
-            if (checkIaWin(grid)) {
-                System.out.println("IA WON");
-                grid.label.setText("IA WON");
-            }
-        }
-
-        //Check de l'égalité
-        if(grid.gridIsFull()){
-            System.out.println("Egalité");
-            grid.label.setText("EGALITE");
-        }
     }
 }
