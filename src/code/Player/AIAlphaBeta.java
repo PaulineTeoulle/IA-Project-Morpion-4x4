@@ -8,23 +8,18 @@ import code.TicTacToe;
 import java.util.*;
 
 //Classe d'IA qui étend la super class Player
-public class AI extends Player {
+public class AIAlphaBeta extends Player {
 
-
-    public AI(Grid grid, Circle circle, TicTacToe ticTacToe) {
+    public AIAlphaBeta(Grid grid, Circle circle, TicTacToe ticTacToe) {
         super("O", grid, circle, ticTacToe);
     }
 
-    //Manière de jouer
-    @Override
     public void play() {
-
-        Cell bestCell = minimax(grid, 5);
-        System.out.println(bestCell.toString());
+        Cell bestCell = AlphaBeta(grid);
+        System.out.println("Best Cell : " + bestCell.toString());
         grid.grid[bestCell.column][bestCell.line] = 2;
         super.circle.paint(grid.getGraphicsContext2D(), bestCell.column, bestCell.line, grid.getScale());
-        System.out.println(Arrays.deepToString(grid.grid));
-
+        System.out.println("Grid after IA TURN : "+Arrays.deepToString(grid.grid));
     }
 
     private ArrayList<Cell> getPossibleMooves() {
@@ -39,44 +34,40 @@ public class AI extends Player {
         return list;
     }
 
-    public Cell minimax(Grid grid, int profondeur) {
-        int bestScoreMax = -1000;
+    public Cell AlphaBeta(Grid grid) {
         ArrayList<Cell> list = new ArrayList<>();
+        int alpha = -1000;
+        int beta = 1000;
+        boolean continuer = true;
 
-        for (int column = 0; column < grid.getColumnCount(); column++) {
-            for (int row = 0; row < grid.getRowCount(); row++) {
+        for (int column = 0; column < grid.getColumnCount() && continuer; column++) {
+            for (int row = 0; row < grid.getRowCount() & continuer; row++) {
 
                 if (cellIsEmpty(this.grid, column, row)) {
                     grid.grid[column][row] = 2;
-                    int eval = Min(profondeur, 2, 2);
+                    int eval = MinAlphaBeta(5, 2, 2, alpha, beta);
 
-                    if (eval > bestScoreMax) {
-                        bestScoreMax = eval;
+                    if (eval > alpha) {
+                        alpha = eval;
                         list.clear();
                         list.add(new Cell(column, row));
                         System.out.println("Cell : " + "["+column +"]"+ "["+row +"]");
                         System.out.println("Eval : " +  eval);
-                    } else if (eval == bestScoreMax) {
-                        list.add(new Cell(column, row));
-                        System.out.println("Cell : " + "["+column +"]"+ "["+row +"]");
-                        System.out.println("Eval : " +  eval);
                     }
-                    if (eval < bestScoreMax) {
-                        System.out.println("Cell : " + "[" + column + "]" + "[" + row + "]");
-                        System.out.println("Eval : " + eval);
-                    }
-
                     grid.grid[column][row] = 0;
+                    if(alpha >=beta){
+                        continuer = false;
+                    }
                 }
             }
         }
-        System.out.println("list: " + list);
+        System.out.println("List of choice : " + list);
         Collections.shuffle(list);
         return list.get(0);
 
     }
 
-    public int Max(int profondeur, int joueur, int joueurEnCours) {
+    public int MaxAlphaBeta(int profondeur, int joueur, int joueurEnCours, int alpha, int beta) {
         if (joueur == 1) {
             joueur = 2;
         } else {
@@ -84,56 +75,60 @@ public class AI extends Player {
         }
 
         if (profondeur == 0 || checkHumanWin(grid) || checkIaWin(grid) || isEquality(grid)) {
-            return eval2(joueurEnCours, profondeur);
+            return evalTerminalTest(joueurEnCours, profondeur);
         }
 
-        int max = -1000;
         for (int column = 0; column < grid.getColumnCount(); column++) {
             for (int row = 0; row < grid.getRowCount(); row++) {
                 if (cellIsEmpty(this.grid, column, row)) {
 
                     grid.grid[column][row] = joueur;
-                    int eval = Min(profondeur - 1, joueur, joueurEnCours);
-                    if (eval > max) {
-                        max = eval;
+                    int eval = MinAlphaBeta(profondeur - 1, joueur, joueurEnCours, alpha, beta);
+                    if (eval > alpha) {
+                        alpha = eval;
                     }
                     grid.grid[column][row] = 0;
+                    if(alpha >= beta){
+                        return beta;
+                    }
                 }
             }
         }
-        return max;
+        return alpha;
     }
 
-    public int Min(int profondeur, int joueur, int joueurEnCours) {
+    public int MinAlphaBeta(int profondeur, int joueur, int joueurEnCours, int alpha, int beta) {
         if (joueur == 1) {
             joueur = 2;
         } else {
             joueur = 1;
         }
         if (profondeur == 0 || checkHumanWin(grid) || checkIaWin(grid) || isEquality(grid)) {
-            return eval2(joueurEnCours, profondeur);
+            return evalTerminalTest(joueurEnCours, profondeur);
         }
 
-        int min = 1000;
         for (int column = 0; column < grid.getColumnCount(); column++) {
             for (int row = 0; row < grid.getRowCount(); row++) {
                 if (cellIsEmpty(this.grid, column, row)) {
 
                     grid.grid[column][row] = joueur;
-                    int eval = Max(profondeur - 1, joueur, joueurEnCours);
+                    int eval = MaxAlphaBeta(profondeur - 1, joueur, joueurEnCours, alpha,beta);
 
-                    if (eval < min) {
-                        min = eval;
+                    if (eval < beta) {
+                        beta = eval;
                     }
                     grid.grid[column][row] = 0;
+                    if(beta <= alpha){
+                        return alpha;
+                    }
 
                 }
             }
         }
-        return min;
+        return beta;
     }
 
-    public int eval2(int joueur, int profondeur) {
+    public int evalTerminalTest(int joueur, int profondeur) {
         int vainqueur = checkWinner();
 
         if ((vainqueur == 2)) {

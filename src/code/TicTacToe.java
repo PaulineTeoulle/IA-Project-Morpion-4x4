@@ -1,6 +1,7 @@
 package code;
 
 import code.Player.AI;
+import code.Player.AIAlphaBeta;
 import code.Player.Human;
 import code.Player.Player;
 import code.Windows.Circle;
@@ -14,6 +15,7 @@ public class TicTacToe extends Check {
     public Group root; //Pour l'ajouter au Canva
     public AI AI; //ai
     public Human human; //humain
+    public AIAlphaBeta AIAlphaBeta;
     public int tour = 2; //Tour de jeu
     public int scale; //ajustement à la fenetre
     public Circle[] shape = new Circle[2]; //Nombre de pions possibles: ici 2
@@ -28,6 +30,7 @@ public class TicTacToe extends Check {
 
         this.human = new Human(this.grid, shape[0], this);
         this.AI = new AI(this.grid, shape[1], this);
+        this.AIAlphaBeta = new AIAlphaBeta(this.grid, shape[1], this);
         grid.widthProperty().bind(
                 root.getScene().widthProperty().divide(1));
         grid.heightProperty().bind(
@@ -67,11 +70,8 @@ public class TicTacToe extends Check {
         }
         //Si l'ia joue
         if (tour == 2) {
-            int column = (int) (mouseEvent.getX() / scale);
-            int row = (int) (mouseEvent.getY() / scale);
-            AI.column = column;
-            AI.row = row;
-            AI.play();
+            //AI.play();
+            AIAlphaBeta.play();
             //Check de win
             if (checkIaWin(grid)) {
                 System.out.println("IA WON");
