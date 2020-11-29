@@ -1,10 +1,11 @@
 package code.Player;
+import code.Check;
 import code.Windows.Circle;
 import code.Grid;
 import code.TicTacToe;
 
 //Class abstraite Player
-public abstract class Player {
+public abstract class Player extends Check {
 
     public String symbol; //le symbole du joueur : X ou O
     public Grid grid; //la grille du jeu

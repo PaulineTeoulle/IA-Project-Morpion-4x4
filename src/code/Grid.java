@@ -6,12 +6,12 @@ import javafx.scene.control.Label;
 
 //Classe Grid qui représente la grille du jeu
 public class Grid extends Canvas {
-    public final Label label; //nom
+    public Label label; //nom
     public int[][] grid; //matrice de la grille
     private final int rowCount; //ligne
     private final int columnCount; //colonne
     public int scale; //ajustement à la fenetre
-    int player = 1; //joueur qui joue en premier : 1=humain et 2=ia
+    public int player = 1; //joueur qui joue en premier : 1=humain et 2=ia
 
     public Grid(Label label, double width, double height, int rowCount, int columnCount) {
         this.label = label;
@@ -22,6 +22,12 @@ public class Grid extends Canvas {
         widthProperty().addListener(evt -> drawGrid());
         heightProperty().addListener(evt -> drawGrid());
     }
+
+    public Grid(int rowCount,int columCount){
+        this.rowCount = rowCount;
+        this.columnCount =columCount;
+    }
+
 
     //Peint la grille de jeu
     public void drawGrid() {
@@ -39,7 +45,7 @@ public class Grid extends Canvas {
     public boolean gridIsFull() {
         int cpt = 0;
         for (int column = 0; column < columnCount; column++) {
-            for (int row = 0; row < columnCount; row++) {
+            for (int row = 0; row < rowCount; row++) {
                 if (grid[column][row] != 0) {
                     cpt++;
                 }

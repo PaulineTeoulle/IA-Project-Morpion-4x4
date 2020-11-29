@@ -2,6 +2,7 @@ package code;
 
 import code.Player.AI;
 import code.Player.Human;
+import code.Player.Player;
 import code.Windows.Circle;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
@@ -37,62 +38,52 @@ public class TicTacToe extends Check {
     //GamePlay
     public void gamePlay(MouseEvent mouseEvent) {
         //Récupération de l'ajustement de la grille
-        int scale = (int) (Math.min(grid.getWidth() / grid.getColumnCount(), grid.getHeight() / grid.getColumnCount()) * 0.8);
+        int scale = (int) (Math.min(grid.getWidth() / grid.getColumnCount(), grid.getHeight() / grid.getRowCount()) * 0.8);
         //Récupération de la colonne et de la ligne selon la souris
-        int column = (int) (mouseEvent.getX() / scale);
-        int row = (int) (mouseEvent.getY() / scale);
 
-        //Check des coord dans la grille
-        if (!coordsAreInGrid(column, row, grid.getColumnCount(), grid.getRowCount())) {
-            System.out.println("Les coordonnées ne sont pas dans la grille");
-            grid.label.setText("Les coordonnées ne sont pas dans la grille");
-        }
-        else {
+        grid.label.setText("");
+        //Changement de tour
+        tour = (tour % 2) + 1;
+        grid.player = tour;
 
-            if (grid.grid[column][row] == 1 || grid.grid[column][row] == 2) {
-                grid.label.setText("La place est déjà prise");
+        //Si l'humain joue
+        if (tour == 1) {
+            int column = (int) (mouseEvent.getX() / scale);
+            int row = (int) (mouseEvent.getY() / scale);
+            if (!coordsAreInGrid(column, row, grid.getColumnCount(), grid.getRowCount())) {
+                System.out.println("Les coordonnées ne sont pas dans la grille");
+                grid.label.setText("Les coordonnées ne sont pas dans la grille");
             }
-            else {
 
-                grid.label.setText("");
-                //Changement de tour
-                tour = (tour % 2) + 1;
-                grid.player = tour;
-
-                //Si l'humain joue
-                if (tour == 1) {
-                    human.row = row;
-                    human.column = column;
-                    human.play();
-                    //Check de win
-                    if (checkHumanWin(grid)) {
-                        System.out.println("Human WON");
-                        grid.label.setText("HUMAN WON");
-                    }
-
-                }
-
-                //Si l'ia joue
-                if (tour == 2) {
-                    AI.row = row;
-                    AI.column = column;
-                    AI.play();
-                    //Check de win
-                    if (checkIaWin(grid)) {
-                        System.out.println("IA WON");
-                        grid.label.setText("IA WON");
-                    }
-
-                }
-
-                //Check de l'égalité
-                if (grid.gridIsFull()) {
-                    System.out.println("Egalité");
-                    grid.label.setText("EGALITE");
-                }
-
+            human.row = row;
+            human.column = column;
+            human.play();
+            //Check de win
+            if (checkHumanWin(grid)) {
+                System.out.println("Human WON");
+                grid.label.setText("HUMAN WON");
+                return;
+            }
+        }
+        //Si l'ia joue
+        if (tour == 2) {
+            int column = (int) (mouseEvent.getX() / scale);
+            int row = (int) (mouseEvent.getY() / scale);
+            AI.column = column;
+            AI.row = row;
+            AI.play();
+            //Check de win
+            if (checkIaWin(grid)) {
+                System.out.println("IA WON");
+                grid.label.setText("IA WON");
+                return;
             }
         }
 
+        //Check de l'égalité
+        if (grid.gridIsFull()) {
+            System.out.println("Egalité");
+            grid.label.setText("EGALITE");
+        }
     }
 }

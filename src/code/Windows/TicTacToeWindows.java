@@ -7,6 +7,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import code.Grid;
 import code.TicTacToe;
+import java.util.Arrays;
 
 //Classe qui regroupe la fenêtre du TicTacToe avec boutons et restart
 public class TicTacToeWindows implements GameInterface {
@@ -18,10 +19,16 @@ public class TicTacToeWindows implements GameInterface {
     }
 
     //Remet la grille à 0 et clear la fenêtre
-    ////TODO : le restart marche pas encore: à revoir
     @Override
     public void restart(MouseEvent mouseEvent) {
         ticTacToe.grid.grid = new int[ticTacToe.grid.getColumnCount()][ticTacToe.grid.getRowCount()];
+        for (int column = 0; column < ticTacToe.grid.getColumnCount(); column++) {
+            for (int row = 0; row < ticTacToe.grid.getRowCount(); row++) {
+                ticTacToe.grid.grid[column][row] =0;
+            }
+        }
+        ticTacToe.grid.drawGrid();
+        System.out.println(Arrays.deepToString(ticTacToe.grid.grid));
         ticTacToe.grid.setOnMouseClicked(ticTacToe::gamePlay);
         setMenuButtons(ticTacToe.root, ticTacToe.grid);
     }
