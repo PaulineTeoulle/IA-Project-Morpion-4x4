@@ -153,21 +153,23 @@ public class AI extends Player {
     }
 
     public int aligne(int joueur) {
-        int cpt = 0;
+        int poids = 0;
         for (int i = 0; i < grid.getColumnCount(); i++) {
             {
                 if ((grid.grid[i][0] == 0 || grid.grid[i][0] == joueur)
                         && (grid.grid[i][1] == 0 || grid.grid[i][1] == joueur)
                         && (grid.grid[i][2] == 0 || grid.grid[i][2] == joueur)
                         && (grid.grid[i][3] == 0 || grid.grid[i][3] == joueur)) {
-                    cpt++;
+
+                    poids = (grid.grid[i][0] + grid.grid[i][1] + grid.grid[i][2] + grid.grid[i][3])/joueur;
                 }
 
                 if ((grid.grid[0][i] == 0 || grid.grid[0][i] == joueur)
                         && (grid.grid[1][i] == 0 || grid.grid[1][i] == joueur)
                         && (grid.grid[2][i] == 0 || grid.grid[2][i] == joueur)
                         && (grid.grid[3][i] == 0 || grid.grid[3][i] == joueur)) {
-                    cpt++;
+
+                    poids = (grid.grid[0][i] + grid.grid[1][i] + grid.grid[2][i] + grid.grid[3][i])/joueur;
                 }
             }
         }
@@ -176,16 +178,16 @@ public class AI extends Player {
                 && (grid.grid[1][1] == joueur || grid.grid[1][1] == 0)
                 && (grid.grid[2][2] == joueur || grid.grid[2][2] == 0)
                 && (grid.grid[3][3] == joueur || grid.grid[3][3] == 0))) {
-            cpt++;
+            poids = (grid.grid[0][0] + grid.grid[1][1] + grid.grid[2][2] + grid.grid[3][3])/joueur;
         }
 
         if ((grid.grid[3][0] == joueur || (grid.grid[3][0] == 0)
                 && (grid.grid[2][1] == joueur || grid.grid[2][1] == 0)
                 && (grid.grid[1][2] == joueur || grid.grid[1][2] == 0)
                 && (grid.grid[0][3] == joueur || grid.grid[0][3] == 0))) {
-            cpt++;
+            poids = (grid.grid[0][3] + grid.grid[1][2] + grid.grid[2][1] + grid.grid[3][0])/joueur;
         }
-        return cpt;
+        return poids;
     }
 
 
