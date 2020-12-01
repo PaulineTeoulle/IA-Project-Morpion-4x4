@@ -49,29 +49,25 @@ public class AIAlphaBeta extends Player {
         ArrayList<Cell> list = new ArrayList<>();
         int alpha = -1000;
         int beta = 1000;
-        boolean continuer = true;
+        ArrayList<Cell> possibleMoves = getPossibleMooves();
 
-        for (int column = 0; column < grid.getColumnCount() && continuer; column++) {
-            for (int row = 0; row < grid.getRowCount() & continuer; row++) {
-
-                if (cellIsEmpty(this.grid, column, row)) {
-                    grid.grid[column][row] = symbol;
+        for (Cell cell : possibleMoves) {
+            if (cellIsEmpty(cell, grid)) {
+                    grid.grid[cell.column][cell.row] = symbol;
                     int eval = MinAlphaBeta(profondeur, symbol, symbol, alpha, beta);
 
                     if (eval > alpha) {
                         alpha = eval;
                         list.clear();
-                        list.add(new Cell(column, row));
-                        System.out.println("Cell : " + "["+column +"]"+ "["+row +"]");
+                        list.add(new Cell(cell.column, cell.row));
+                        System.out.println("Cell : " + "["+cell.column +"]"+ "["+cell.row +"]");
                         System.out.println("Eval : " +  eval);
                     }
-                    grid.grid[column][row] = 0;
-                    if(alpha >=beta){
-                        continuer = false;
-                    }
+                    grid.grid[cell.column][cell.row] = 0;
+
                 }
             }
-        }
+
         System.out.println("List of choice : " + list);
         Collections.shuffle(list);
         return list.get(0);

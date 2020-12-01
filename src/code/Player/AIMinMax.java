@@ -26,7 +26,7 @@ public class AIMinMax extends Player {
             symbol = 1;
         }
 
-        Cell bestCell = minimax(grid, 5, symbol);
+        Cell bestCell = minMax(grid, 5, symbol);
         System.out.println(bestCell.toString());
         grid.grid[bestCell.column][bestCell.row] = symbol;
         super.circle.paint(grid.getGraphicsContext2D(), bestCell.column, bestCell.row, grid.getScale());
@@ -46,41 +46,36 @@ public class AIMinMax extends Player {
         return list;
     }
 
-    private Cell minimax(Grid grid, int profondeur, int symbol) {
+    private Cell minMax(Grid grid, int profondeur, int symbol) {
         int bestScoreMax = -1000;
         ArrayList<Cell> list = new ArrayList<>();
+        ArrayList<Cell> possibleMoves = getPossibleMooves();
 
-        for (int column = 0; column < grid.getColumnCount(); column++) {
-            for (int row = 0; row < grid.getRowCount(); row++) {
-
-                if (cellIsEmpty(this.grid, column, row)) {
-                    grid.grid[column][row] = symbol;
-                    int eval = Min(profondeur, symbol, symbol);
-
-                    if (eval > bestScoreMax) {
-                        bestScoreMax = eval;
-                        list.clear();
-                        list.add(new Cell(column, row));
-                        System.out.println("Cell : " + "[" + column + "]" + "[" + row + "]");
-                        System.out.println("Eval : " + eval);
-                    } else if (eval == bestScoreMax) {
-                        list.add(new Cell(column, row));
-                        System.out.println("Cell : " + "[" + column + "]" + "[" + row + "]");
-                        System.out.println("Eval : " + eval);
-                    }
-                    if (eval < bestScoreMax) {
-                        System.out.println("Cell : " + "[" + column + "]" + "[" + row + "]");
-                        System.out.println("Eval : " + eval);
-                    }
-
-                    grid.grid[column][row] = 0;
+        for (Cell cell : possibleMoves) {
+            if (cellIsEmpty(cell, grid)) {
+                grid.grid[cell.column][cell.row] = symbol;
+                int eval = Min(profondeur, symbol, symbol);
+                if (eval > bestScoreMax) {
+                    bestScoreMax = eval;
+                    list.clear();
+                    list.add(new Cell(cell.column, cell.row));
+                    System.out.println("Cell : " + "[" + cell.column + "]" + "[" + cell.row + "]");
+                    System.out.println("Eval : " + eval);
+                } else if (eval == bestScoreMax) {
+                    list.add(new Cell(cell.column, cell.row));
+                    System.out.println("Cell : " + "[" + cell.column + "]" + "[" + cell.row + "]");
+                    System.out.println("Eval : " + eval);
                 }
+                if (eval < bestScoreMax) {
+                    System.out.println("Cell : " + "[" + cell.column + "]" + "[" + cell.row + "]");
+                    System.out.println("Eval : " + eval);
+                }
+                grid.grid[cell.column][cell.row] = 0;
             }
         }
         System.out.println("list: " + list);
         Collections.shuffle(list);
         return list.get(0);
-
     }
 
     private int Max(int profondeur, int joueur, int joueurEnCours) {
@@ -98,7 +93,6 @@ public class AIMinMax extends Player {
         for (int column = 0; column < grid.getColumnCount(); column++) {
             for (int row = 0; row < grid.getRowCount(); row++) {
                 if (cellIsEmpty(this.grid, column, row)) {
-
                     grid.grid[column][row] = joueur;
                     int eval = Min(profondeur - 1, joueur, joueurEnCours);
                     if (eval > max) {
@@ -125,15 +119,12 @@ public class AIMinMax extends Player {
         for (int column = 0; column < grid.getColumnCount(); column++) {
             for (int row = 0; row < grid.getRowCount(); row++) {
                 if (cellIsEmpty(this.grid, column, row)) {
-
                     grid.grid[column][row] = joueur;
                     int eval = Max(profondeur - 1, joueur, joueurEnCours);
-
                     if (eval < min) {
                         min = eval;
                     }
                     grid.grid[column][row] = 0;
-
                 }
             }
         }
