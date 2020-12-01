@@ -1,5 +1,9 @@
 package code.Windows;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
@@ -12,13 +16,11 @@ import java.util.Arrays;
 //Classe qui regroupe la fenêtre du TicTacToe avec boutons et restart
 public class TicTacToeWindows implements GameInterface {
     TicTacToe ticTacToe;
-    Button restartButton = new Button("RESTART");
 
     public TicTacToeWindows(TicTacToe ticTacToe) {
         this.ticTacToe = ticTacToe;
     }
 
-    //Remet la grille à 0 et clear la fenêtre
     @Override
     public void restart(MouseEvent mouseEvent) {
         ticTacToe.grid.grid = new int[ticTacToe.grid.getColumnCount()][ticTacToe.grid.getRowCount()];
@@ -33,13 +35,28 @@ public class TicTacToeWindows implements GameInterface {
         setMenuButtons(ticTacToe.root, ticTacToe.grid);
     }
 
+
     @Override
     public void setMenuButtons(Group root, Grid grid) {
         root.getChildren().remove(root.getChildren().size() - 1);
-        VBox vBox = new VBox();
+        HBox hBox = new HBox();
+        hBox.setAlignment(Pos.TOP_CENTER);
+        Button restartButton = new Button("Restart");
+        Button backButton = new Button("Back");
+        backButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                backButton.getScene().setRoot(root);
+            }
+        });
         restartButton.setOnMouseClicked(this::restart);
+        hBox.getChildren().addAll(restartButton, backButton);
+
+        VBox vBox = new VBox();
+        vBox.setPadding(new Insets(50, 50, 50, 50));
         vBox.getChildren().addAll(grid.label);
-        vBox.getChildren().addAll(new HBox(new VBox(restartButton)), grid);
+
+        vBox.getChildren().addAll(hBox, grid);
         root.getChildren().add(vBox);
     }
 

@@ -7,13 +7,11 @@ import code.TicTacToe;
 //Class abstraite Player
 public abstract class Player extends Check {
 
-    public String symbol; //le symbole du joueur : X ou O
     public Grid grid; //la grille du jeu
     public Circle circle; //le cercle à peindre
     public TicTacToe ticTacToe; //le jeu du tictactoe (relie le joueur au jeu)
 
-    public Player(String symbol, Grid grid, Circle circle, TicTacToe ticTacToe) {
-    this.symbol = symbol;
+    public Player(Grid grid, Circle circle, TicTacToe ticTacToe) {
     this.grid = grid;
     this.circle = circle;
     this.ticTacToe = ticTacToe;
