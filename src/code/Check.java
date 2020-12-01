@@ -4,7 +4,7 @@ package code;
 public abstract class Check {
 
     //Les coordonées sont bien dans la grille : renvoie oui ou non
-    public boolean coordsAreInGrid(int col, int row, int maxCol, int maxRow) {
+    public boolean coordsAreNotInGrid(int col, int row, int maxCol, int maxRow) {
         return (col < 0 || col >= maxCol) || (row < 0 || row >= maxRow);
     }
 

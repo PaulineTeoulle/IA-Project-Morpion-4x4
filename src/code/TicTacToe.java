@@ -91,7 +91,7 @@ public class TicTacToe extends Check {
         if (tour == 1) {
             int column = (int) (mouseEvent.getX() / scale);
             int row = (int) (mouseEvent.getY() / scale);
-            if (coordsAreInGrid(column, row, grid.getColumnCount(), grid.getRowCount())) {
+            if (coordsAreNotInGrid(column, row, grid.getColumnCount(), grid.getRowCount())) {
                 System.out.println("Les coordonnées ne sont pas dans la grille");
                 grid.label.setText("Les coordonnées ne sont pas dans la grille");
             }
@@ -131,7 +131,7 @@ public class TicTacToe extends Check {
         if (tour == 1) {
             int column = (int) (mouseEvent.getX() / scale);
             int row = (int) (mouseEvent.getY() / scale);
-            if (coordsAreInGrid(column, row, grid.getColumnCount(), grid.getRowCount())) {
+            if (coordsAreNotInGrid(column, row, grid.getColumnCount(), grid.getRowCount())) {
                 System.out.println("Les coordonnées ne sont pas dans la grille");
                 grid.label.setText("Les coordonnées ne sont pas dans la grille");
             }
@@ -149,7 +149,7 @@ public class TicTacToe extends Check {
         if (tour == 2) {
             int column = (int) (mouseEvent.getX() / scale);
             int row = (int) (mouseEvent.getY() / scale);
-            if (coordsAreInGrid(column, row, grid.getColumnCount(), grid.getRowCount())) {
+            if (coordsAreNotInGrid(column, row, grid.getColumnCount(), grid.getRowCount())) {
                 System.out.println("Les coordonnées ne sont pas dans la grille");
                 grid.label.setText("Les coordonnées ne sont pas dans la grille");
             }
@@ -175,7 +175,7 @@ public class TicTacToe extends Check {
         if (tour == 1) {
             int column = (int) (mouseEvent.getX() / scale);
             int row = (int) (mouseEvent.getY() / scale);
-            if (coordsAreInGrid(column, row, grid.getColumnCount(), grid.getRowCount())) {
+            if (coordsAreNotInGrid(column, row, grid.getColumnCount(), grid.getRowCount())) {
                 System.out.println("Les coordonnées ne sont pas dans la grille");
                 grid.label.setText("Les coordonnées ne sont pas dans la grille");
             }
@@ -209,7 +209,7 @@ public class TicTacToe extends Check {
         if (tour == 1) {
             int column = (int) (mouseEvent.getX() / scale);
             int row = (int) (mouseEvent.getY() / scale);
-            if (coordsAreInGrid(column, row, grid.getColumnCount(), grid.getRowCount())) {
+            if (coordsAreNotInGrid(column, row, grid.getColumnCount(), grid.getRowCount())) {
                 System.out.println("Coords are not in the grid");
                 grid.label.setText("Coords are not in the grid");
             }
