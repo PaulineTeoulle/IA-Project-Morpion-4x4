@@ -2,6 +2,7 @@ package code;
 
 import code.Player.AIMinMax;
 import code.Player.AIAlphaBeta;
+import code.Player.AiRandom;
 import code.Player.Human;
 import code.Windows.Circle;
 import javafx.scene.Group;
@@ -12,10 +13,11 @@ import javafx.scene.paint.Color;
 public class TicTacToe extends Check {
     public Grid grid; //La grille de jeu
     public Group root; //Pour l'ajouter au Canva
-    public AIMinMax AIMinMax; //ai
+
     public Human human; //humain
     public Human human2;
-
+    public AiRandom AIRandom;
+    public AIMinMax AIMinMax; //ai
     public AIAlphaBeta AIAlphaBeta;
     public int tour = 2; //Tour de jeu
     public int scale; //ajustement à la fenetre
@@ -47,6 +49,10 @@ public class TicTacToe extends Check {
             this.AIMinMax = new AIMinMax(this.grid, shape[0], this, gameChoice);
             this.AIAlphaBeta = new AIAlphaBeta(this.grid, shape[1], this, gameChoice);
         }
+        else if (gameChoice ==5){
+            this.human = new Human(this.grid, shape[0], this, gameChoice);
+            this.AIRandom = new AiRandom(this.grid, shape[1], this);
+        }
 
         grid.widthProperty().bind(
                 root.getScene().widthProperty().divide(1));
@@ -75,6 +81,42 @@ public class TicTacToe extends Check {
         if(gamechoice ==4){
             AiMinMaxVSAiAlphaBeta();
         }
+        if(gamechoice ==5){
+            humanVSaiRandom(mouseEvent, scale);
+        }
+    }
+
+    private void humanVSaiRandom(MouseEvent mouseEvent, int scale) {
+        changeTurn();
+        if (tour == 1) {
+            int column = (int) (mouseEvent.getX() / scale);
+            int row = (int) (mouseEvent.getY() / scale);
+            if (coordsAreInGrid(column, row, grid.getColumnCount(), grid.getRowCount())) {
+                System.out.println("Les coordonnées ne sont pas dans la grille");
+                grid.label.setText("Les coordonnées ne sont pas dans la grille");
+            }
+            human.row = row;
+            human.column = column;
+            human.play();
+            //Check de win
+            if (checkHumanWin(grid)) {
+                System.out.println("Human1 won !");
+                grid.label.setText("Human1 won !");
+            }
+        }
+
+        //Si l'ia joue
+        if (tour == 2) {
+            AIRandom.play();
+            //Check de win
+            if (checkIaWin(grid)) {
+                System.out.println("AI Random won !");
+                grid.label.setText("AI Random won !");
+            }
+        }
+
+        //Check de l'égalité
+        checkDraw();
     }
 
     private void changeTurn() {

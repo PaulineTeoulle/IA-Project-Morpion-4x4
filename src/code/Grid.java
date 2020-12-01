@@ -23,12 +23,6 @@ public class Grid extends Canvas {
         heightProperty().addListener(evt -> drawGrid());
     }
 
-    public Grid(int rowCount,int columCount){
-        this.rowCount = rowCount;
-        this.columnCount =columCount;
-    }
-
-
     //Peint la grille de jeu
     public void drawGrid() {
         getGraphicsContext2D().clearRect(0, 0, getWidth(), getHeight());

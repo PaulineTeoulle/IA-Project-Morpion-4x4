@@ -35,7 +35,7 @@ public class TicTacToeWindows implements GameInterface {
         setMenuButtons(ticTacToe.root, ticTacToe.grid);
     }
 
-
+    //TODO :TOFIX
     @Override
     public void setMenuButtons(Group root, Grid grid) {
         root.getChildren().remove(root.getChildren().size() - 1);
@@ -43,12 +43,7 @@ public class TicTacToeWindows implements GameInterface {
         hBox.setAlignment(Pos.TOP_CENTER);
         Button restartButton = new Button("Restart");
         Button backButton = new Button("Back");
-        backButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                backButton.getScene().setRoot(root);
-            }
-        });
+        backButton.setOnAction(actionEvent -> backButton.getScene().setRoot(root));
         restartButton.setOnMouseClicked(this::restart);
         hBox.getChildren().addAll(restartButton, backButton);
 
