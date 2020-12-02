@@ -25,12 +25,14 @@ public class AIAlphaBeta extends Player {
         else if(gameChoice ==4){
             symbol = 2;
         }
-
-        Cell bestCell = AlphaBeta(grid,5, symbol);
+        long tempsDebut = System.currentTimeMillis();
+        Cell bestCell = AlphaBeta(grid,7, symbol);
         System.out.println("Best Cell : " + bestCell.toString());
         grid.grid[bestCell.column][bestCell.row] = symbol;
         super.circle.paint(grid.getGraphicsContext2D(), bestCell.column, bestCell.row, grid.getScale());
-        System.out.println("Grid after IA TURN : "+Arrays.deepToString(grid.grid));
+        long tempsFin = System.currentTimeMillis();
+        float seconds = (tempsFin - tempsDebut) / 1000F;
+        System.out.println("Process time : "+ seconds + " seconds.");
     }
 
     private ArrayList<Cell> getPossibleMooves() {

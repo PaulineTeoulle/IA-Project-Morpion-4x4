@@ -14,11 +14,16 @@ public class AiRandom extends Player {
 
     @Override
     public void play() {
+
+        long tempsDebut = System.currentTimeMillis();
         ArrayList<Cell> possibleMooves = getPossibleMooves();
         int indexOfRandomCell = getRandomIndex(possibleMooves.size());
         Cell randomCell = possibleMooves.get(indexOfRandomCell);
         grid.grid[randomCell.column][randomCell.row]=2;
         super.circle.paint(grid.getGraphicsContext2D(), randomCell.column, randomCell.row, grid.getScale());
+        long tempsFin = System.currentTimeMillis();
+        float seconds = (tempsFin - tempsDebut) / 1000F;
+        System.out.println("Process time : "+ seconds + " seconds.");
 
     }
     private static int getRandomIndex(  int max ) {

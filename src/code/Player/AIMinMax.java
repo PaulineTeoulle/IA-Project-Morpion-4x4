@@ -25,12 +25,15 @@ public class AIMinMax extends Player {
         } else if (gameChoice == 4) {
             symbol = 1;
         }
-
-        Cell bestCell = minMax(grid, 5, symbol);
-        System.out.println(bestCell.toString());
+        long tempsDebut = System.currentTimeMillis();
+        Cell bestCell = minMax(grid, 7, symbol);
+        System.out.println("Best Cell : " + bestCell.toString());
         grid.grid[bestCell.column][bestCell.row] = symbol;
         super.circle.paint(grid.getGraphicsContext2D(), bestCell.column, bestCell.row, grid.getScale());
         System.out.println(Arrays.deepToString(grid.grid));
+        long tempsFin = System.currentTimeMillis();
+        float seconds = (tempsFin - tempsDebut) / 1000F;
+        System.out.println("Process time : "+ seconds + " seconds.");
 
     }
 
@@ -73,7 +76,7 @@ public class AIMinMax extends Player {
                 grid.grid[cell.column][cell.row] = 0;
             }
         }
-        System.out.println("list: " + list);
+        System.out.println("List: " + list);
         Collections.shuffle(list);
         return list.get(0);
     }
