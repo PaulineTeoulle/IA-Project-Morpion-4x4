@@ -4,8 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 //Class Circle qui représente graphiquement un pion
-public class Circle
-{
+public class Circle {
     public double width, height;
     public Color color;
 

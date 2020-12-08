@@ -15,7 +15,7 @@ public class AIAlphaBeta extends Player {
     private final int profondeur;
 
     public AIAlphaBeta(Grid grid, Circle circle, TicTacToe ticTacToe, int gameChoice) {
-        super (grid, circle, ticTacToe);
+        super(grid, circle, ticTacToe);
         this.gameChoice = gameChoice;
         this.profondeur = 3;
     }
@@ -23,10 +23,9 @@ public class AIAlphaBeta extends Player {
     //Placement du pion
     @Override
     public void play() {
-        if(gameChoice ==3){
+        if (gameChoice == 3) {
             symbol = 2;
-        }
-        else if(gameChoice ==4){
+        } else if (gameChoice == 4) {
             symbol = 2;
         }
         long tempsDebut = System.currentTimeMillis();
@@ -36,15 +35,15 @@ public class AIAlphaBeta extends Player {
         super.circle.paint(grid.getGraphicsContext2D(), bestCell.column, bestCell.row, grid.getScale());
         long tempsFin = System.currentTimeMillis();
         float seconds = (tempsFin - tempsDebut) / 1000F;
-        System.out.println("Process time : "+ seconds + " seconds.");
+        System.out.println("Process time : " + seconds + " seconds.");
     }
 
     private ArrayList<Cell> getPossibleMooves() {
         ArrayList<Cell> list = new ArrayList<>();
-        for(int i=0;i < grid.getColumnCount();i++){
-            for(int j=0;j < grid.getRowCount();j++){
-                if(grid.grid[i][j]==0){
-                    list.add(new Cell(i,j));
+        for (int i = 0; i < grid.getColumnCount(); i++) {
+            for (int j = 0; j < grid.getRowCount(); j++) {
+                if (grid.grid[i][j] == 0) {
+                    list.add(new Cell(i, j));
                 }
             }
         }
@@ -60,19 +59,19 @@ public class AIAlphaBeta extends Player {
 
         for (Cell cell : possibleMoves) {
             if (cellIsEmpty(cell, grid)) {
-                    grid.grid[cell.column][cell.row] = symbol;
-                    int eval = MinAlphaBeta(profondeur, symbol, symbol, alpha, beta);
+                grid.grid[cell.column][cell.row] = symbol;
+                int eval = MinAlphaBeta(profondeur, symbol, symbol, alpha, beta);
 
-                    if (eval > alpha) {
-                        alpha = eval;
-                        list.clear();
-                        list.add(new Cell(cell.column, cell.row));
-                        System.out.println("Cell : " + "["+cell.column +"]"+ "["+cell.row +"]");
-                        System.out.println("Eval : " +  eval);
-                    }
-                    grid.grid[cell.column][cell.row] = 0;
+                if (eval > alpha) {
+                    alpha = eval;
+                    list.clear();
+                    list.add(new Cell(cell.column, cell.row));
+                    System.out.println("Cell : " + "[" + cell.column + "]" + "[" + cell.row + "]");
+                    System.out.println("Eval : " + eval);
                 }
+                grid.grid[cell.column][cell.row] = 0;
             }
+        }
 
         System.out.println("List of choice : " + list);
         Collections.shuffle(list);
@@ -99,7 +98,7 @@ public class AIAlphaBeta extends Player {
                         alpha = eval;
                     }
                     grid.grid[column][row] = 0;
-                    if(alpha >= beta){
+                    if (alpha >= beta) {
                         return beta;
                     }
                 }
@@ -116,20 +115,20 @@ public class AIAlphaBeta extends Player {
             joueur = 1;
         }
         if (profondeur == 0 || checkHumanWin(grid) || checkIaWin(grid) || isDraw(grid)) {
-            return evaluateTerminalTest(joueurEnCours, profondeur,symbol, grid);
+            return evaluateTerminalTest(joueurEnCours, profondeur, symbol, grid);
         }
         for (int column = 0; column < grid.getColumnCount(); column++) {
             for (int row = 0; row < grid.getRowCount(); row++) {
                 if (cellIsEmpty(this.grid, column, row)) {
 
                     grid.grid[column][row] = joueur;
-                    int eval = MaxAlphaBeta(profondeur - 1, joueur, joueurEnCours, alpha,beta);
+                    int eval = MaxAlphaBeta(profondeur - 1, joueur, joueurEnCours, alpha, beta);
 
                     if (eval < beta) {
                         beta = eval;
                     }
                     grid.grid[column][row] = 0;
-                    if(beta <= alpha){
+                    if (beta <= alpha) {
                         return alpha;
                     }
                 }

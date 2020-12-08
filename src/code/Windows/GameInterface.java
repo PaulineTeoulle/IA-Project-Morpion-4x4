@@ -7,5 +7,6 @@ import code.Grid;
 //Interface pour avoir les boutons
 public interface GameInterface {
     void restart(MouseEvent mouseEvent);
+
     void setMenuButtons(Group root, Grid grid);
 }

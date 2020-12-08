@@ -4,6 +4,7 @@ import code.Cell;
 import code.Windows.Circle;
 import code.Grid;
 import code.TicTacToe;
+
 import java.util.*;
 
 //Classe d'IA MinMax
@@ -27,14 +28,14 @@ public class AIMinMax extends Player {
             symbol = 1;
         }
         long tempsDebut = System.currentTimeMillis();
-        Cell bestCell = minMax(grid,  symbol);
+        Cell bestCell = minMax(grid, symbol);
         System.out.println("Best Cell : " + bestCell.toString());
         grid.grid[bestCell.column][bestCell.row] = symbol;
         super.circle.paint(grid.getGraphicsContext2D(), bestCell.column, bestCell.row, grid.getScale());
         System.out.println(Arrays.deepToString(grid.grid));
         long tempsFin = System.currentTimeMillis();
         float seconds = (tempsFin - tempsDebut) / 1000F;
-        System.out.println("Process time : "+ seconds + " seconds.");
+        System.out.println("Process time : " + seconds + " seconds.");
 
     }
 

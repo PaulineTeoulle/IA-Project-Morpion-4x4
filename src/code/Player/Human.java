@@ -1,7 +1,9 @@
 package code.Player;
+
 import code.Windows.Circle;
 import code.Grid;
 import code.TicTacToe;
+
 import java.util.Arrays;
 
 //Classe de l'humain

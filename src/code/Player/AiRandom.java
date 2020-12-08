@@ -4,6 +4,7 @@ import code.Cell;
 import code.Grid;
 import code.TicTacToe;
 import code.Windows.Circle;
+
 import java.util.ArrayList;
 
 public class AiRandom extends Player {
@@ -19,14 +20,14 @@ public class AiRandom extends Player {
         ArrayList<Cell> possibleMooves = getPossibleMooves();
         int indexOfRandomCell = getRandomIndex(possibleMooves.size());
         Cell randomCell = possibleMooves.get(indexOfRandomCell);
-        grid.grid[randomCell.column][randomCell.row]=2;
+        grid.grid[randomCell.column][randomCell.row] = 2;
         super.circle.paint(grid.getGraphicsContext2D(), randomCell.column, randomCell.row, grid.getScale());
         long tempsFin = System.currentTimeMillis();
         float seconds = (tempsFin - tempsDebut) / 1000F;
-        System.out.println("Process time : "+ seconds + " seconds.");
+        System.out.println("Process time : " + seconds + " seconds.");
     }
 
-    private static int getRandomIndex(  int max ) {
+    private static int getRandomIndex(int max) {
         return (int) (Math.random() * max);
     }
 

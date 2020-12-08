@@ -37,8 +37,8 @@ public class Main extends Application {
         Button aiVSai = new Button("AI MinMax vs AI AlphaBetaMinMax !");
         aiVSai.setPrefSize(220, 20);
 
-        hBox.getChildren().addAll(humanVShuman,humanVSaiRandom,humanVSaiMinMax,humanVSaiAlphaBeta,aiVSai);
-        setButtonsOnMouseClicked(root, humanVShuman, humanVSaiRandom,humanVSaiMinMax, humanVSaiAlphaBeta, aiVSai);
+        hBox.getChildren().addAll(humanVShuman, humanVSaiRandom, humanVSaiMinMax, humanVSaiAlphaBeta, aiVSai);
+        setButtonsOnMouseClicked(root, humanVShuman, humanVSaiRandom, humanVSaiMinMax, humanVSaiAlphaBeta, aiVSai);
         root.getChildren().add(hBox);
         //Affichage de la fenêtre
         stage.show();
@@ -46,17 +46,17 @@ public class Main extends Application {
     }
 
     //Assigne les actions aux boutons
-    private void setButtonsOnMouseClicked(Group root, Button humanVShuman, Button humanVSaiRandom,Button humanVSaiMinMax, Button humanVSaiAlphaBeta, Button aiVSai) {
-        TicTacToe humanVShumanGamePlay = new TicTacToe(root,1);
-        TicTacToe humanVSaiGamePlay = new TicTacToe(root,2);
-        TicTacToe humanVSaiAlphaBetaGamePlay = new TicTacToe(root,3);
-        TicTacToe aiVSaiGamePlay = new TicTacToe(root,4);
+    private void setButtonsOnMouseClicked(Group root, Button humanVShuman, Button humanVSaiRandom, Button humanVSaiMinMax, Button humanVSaiAlphaBeta, Button aiVSai) {
+        TicTacToe humanVShumanGamePlay = new TicTacToe(root, 1);
+        TicTacToe humanVSaiGamePlay = new TicTacToe(root, 2);
+        TicTacToe humanVSaiAlphaBetaGamePlay = new TicTacToe(root, 3);
+        TicTacToe aiVSaiGamePlay = new TicTacToe(root, 4);
         TicTacToe humanVSaiRandomGamePlay = new TicTacToe(root, 5);
 
         humanVShuman.setOnMouseClicked(new TicTacToeWindows(humanVShumanGamePlay)::restart);
         humanVSaiRandom.setOnMouseClicked(new TicTacToeWindows(humanVSaiRandomGamePlay)::restart);
-        humanVSaiMinMax.setOnMouseClicked(new TicTacToeWindows(humanVSaiGamePlay):: restart);
-        humanVSaiAlphaBeta.setOnMouseClicked(new TicTacToeWindows(humanVSaiAlphaBetaGamePlay):: restart);
+        humanVSaiMinMax.setOnMouseClicked(new TicTacToeWindows(humanVSaiGamePlay)::restart);
+        humanVSaiAlphaBeta.setOnMouseClicked(new TicTacToeWindows(humanVSaiAlphaBetaGamePlay)::restart);
         aiVSai.setOnMouseClicked(new TicTacToeWindows(aiVSaiGamePlay)::restart);
     }
 

@@ -1,4 +1,5 @@
 package code.Player;
+
 import code.Check;
 import code.Windows.Circle;
 import code.Grid;
@@ -12,9 +13,9 @@ public abstract class Player extends Check {
     public TicTacToe ticTacToe; //le jeu du tictactoe
 
     public Player(Grid grid, Circle circle, TicTacToe ticTacToe) {
-    this.grid = grid;
-    this.circle = circle;
-    this.ticTacToe = ticTacToe;
+        this.grid = grid;
+        this.circle = circle;
+        this.ticTacToe = ticTacToe;
     }
 
     public abstract void play();

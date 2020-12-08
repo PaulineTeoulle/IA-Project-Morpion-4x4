@@ -5,7 +5,7 @@ public class Cell {
     public int row;
     public int column;
 
-    public Cell(int column, int row){
+    public Cell(int column, int row) {
         this.column = column;
         this.row = row;
 
@@ -13,7 +13,7 @@ public class Cell {
 
     @Override
     public String toString() {
-        return "["+column+"]"+"["+row +"]";
+        return "[" + column + "]" + "[" + row + "]";
     }
 
 }

@@ -34,23 +34,19 @@ public class TicTacToe extends Check {
         shape[0] = new Circle(scale, scale, Color.RED);
         shape[1] = new Circle(scale, scale, Color.BLUE);
 
-        if(gameChoice ==1){
+        if (gameChoice == 1) {
             this.human = new Human(this.grid, shape[0], this, gameChoice);
             this.human2 = new Human(this.grid, shape[1], this, gameChoice);
-        }
-        else if (gameChoice ==2){
+        } else if (gameChoice == 2) {
             this.human = new Human(this.grid, shape[0], this, gameChoice);
             this.AIMinMax = new AIMinMax(this.grid, shape[1], this, gameChoice);
-        }
-        else if (gameChoice ==3){
+        } else if (gameChoice == 3) {
             this.human = new Human(this.grid, shape[0], this, gameChoice);
             this.AIAlphaBeta = new AIAlphaBeta(this.grid, shape[1], this, gameChoice);
-        }
-       else if (gameChoice ==4){
+        } else if (gameChoice == 4) {
             this.AIMinMax = new AIMinMax(this.grid, shape[0], this, gameChoice);
             this.AIAlphaBeta = new AIAlphaBeta(this.grid, shape[1], this, gameChoice);
-        }
-        else if (gameChoice ==5){
+        } else if (gameChoice == 5) {
             this.human = new Human(this.grid, shape[0], this, gameChoice);
             this.AIRandom = new AiRandom(this.grid, shape[1], this);
         }
@@ -67,22 +63,22 @@ public class TicTacToe extends Check {
         grid.label.setText("");
 
         //Humain vs Humain
-        if(gamechoice ==1) {
+        if (gamechoice == 1) {
             humanVShuman(mouseEvent, scale);
         }
         //Humain vs MinMax
-        if(gamechoice ==2){
+        if (gamechoice == 2) {
             humanVSaiMinMax(mouseEvent, scale);
         }
         //Humain vs AlphaBeta
-        if(gamechoice ==3){
+        if (gamechoice == 3) {
             humanVSaiAlphaBeta(mouseEvent, scale);
         }
         //MinMax vs AlphaBeta
-        if(gamechoice ==4){
+        if (gamechoice == 4) {
             AiMinMaxVSAiAlphaBeta();
         }
-        if(gamechoice ==5){
+        if (gamechoice == 5) {
             humanVSaiRandom(mouseEvent, scale);
         }
     }
@@ -263,7 +259,7 @@ public class TicTacToe extends Check {
     }
 
     private void checkDraw() {
-        if(isDraw(grid)){
+        if (isDraw(grid)) {
             System.out.println("Draw !");
             grid.label.setText("Draw !");
         }
