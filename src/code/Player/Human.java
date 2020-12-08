@@ -1,12 +1,10 @@
 package code.Player;
-
 import code.Windows.Circle;
 import code.Grid;
 import code.TicTacToe;
-
 import java.util.Arrays;
 
-//Classe de l'humain qui étend la super class Player
+//Classe de l'humain
 public class Human extends Player {
     public int column;
     public int row;
@@ -17,7 +15,7 @@ public class Human extends Player {
         this.gameChoice = gameChoice;
     }
 
-    //Manière de jouer
+    //Placement du pion
     @Override
     public void play() {
         //Si la case est dispo, on paint, on rajoute dans la grille, et on print la grille

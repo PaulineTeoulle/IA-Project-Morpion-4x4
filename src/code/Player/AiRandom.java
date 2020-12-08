@@ -12,9 +12,9 @@ public class AiRandom extends Player {
         super(grid, circle, ticTacToe);
     }
 
+    //Placement du pion de manière aléatoire
     @Override
     public void play() {
-
         long tempsDebut = System.currentTimeMillis();
         ArrayList<Cell> possibleMooves = getPossibleMooves();
         int indexOfRandomCell = getRandomIndex(possibleMooves.size());
@@ -24,8 +24,8 @@ public class AiRandom extends Player {
         long tempsFin = System.currentTimeMillis();
         float seconds = (tempsFin - tempsDebut) / 1000F;
         System.out.println("Process time : "+ seconds + " seconds.");
-
     }
+
     private static int getRandomIndex(  int max ) {
         return (int) (Math.random() * max);
     }

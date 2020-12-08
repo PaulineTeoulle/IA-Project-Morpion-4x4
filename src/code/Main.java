@@ -22,21 +22,18 @@ public class Main extends Application {
         stage.setScene(new Scene(root, 850, 800));
         root.getChildren().clear();
         HBox hBox = new HBox();
-        //hBox.setPadding(new Insets(0, 30, 30, 40));
         hBox.setStyle("-fx-background-color: #336699;");
         hBox.setAlignment(Pos.CENTER);
+
+        //Définition des boutons
         Button humanVShuman = new Button("Human vs Human !");
         humanVShuman.setPrefSize(150, 20);
-
         Button humanVSaiRandom = new Button("Human vs AI Random !");
         humanVSaiRandom.setPrefSize(150, 20);
-
         Button humanVSaiMinMax = new Button("Human vs AI MinMax !");
         humanVSaiMinMax.setPrefSize(150, 20);
-
         Button humanVSaiAlphaBeta = new Button("Human vs AI AlphaBetaMinMax !");
         humanVSaiMinMax.setPrefSize(150, 20);
-
         Button aiVSai = new Button("AI MinMax vs AI AlphaBetaMinMax !");
         aiVSai.setPrefSize(220, 20);
 
@@ -48,6 +45,7 @@ public class Main extends Application {
 
     }
 
+    //Assigne les actions aux boutons
     private void setButtonsOnMouseClicked(Group root, Button humanVShuman, Button humanVSaiRandom,Button humanVSaiMinMax, Button humanVSaiAlphaBeta, Button aiVSai) {
         TicTacToe humanVShumanGamePlay = new TicTacToe(root,1);
         TicTacToe humanVSaiGamePlay = new TicTacToe(root,2);

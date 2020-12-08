@@ -1,5 +1,6 @@
 package code;
 
+//Classe qui définie une cellule possible pour que l'ia joue
 public class Cell {
     public int row;
     public int column;

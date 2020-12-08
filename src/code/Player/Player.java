@@ -9,7 +9,7 @@ public abstract class Player extends Check {
 
     public Grid grid; //la grille du jeu
     public Circle circle; //le cercle à peindre
-    public TicTacToe ticTacToe; //le jeu du tictactoe (relie le joueur au jeu)
+    public TicTacToe ticTacToe; //le jeu du tictactoe
 
     public Player(Grid grid, Circle circle, TicTacToe ticTacToe) {
     this.grid = grid;

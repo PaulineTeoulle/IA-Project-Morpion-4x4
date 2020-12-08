@@ -8,10 +8,10 @@ import javafx.scene.control.Label;
 public class Grid extends Canvas {
     public Label label; //nom
     public int[][] grid; //matrice de la grille
-    private final int rowCount; //ligne
-    private final int columnCount; //colonne
+    private final int rowCount; //nombre de lignes
+    private final int columnCount; //nombre de colonne
     public int scale; //ajustement à la fenetre
-    public int player = 1; //joueur qui joue en premier : 1=humain et 2=ia
+    public int player = 1; //joueur qui joue en premier : ici l'humain joue en premier
 
     public Grid(Label label, double width, double height, int rowCount, int columnCount) {
         this.label = label;
@@ -27,7 +27,7 @@ public class Grid extends Canvas {
     public void drawGrid() {
         getGraphicsContext2D().clearRect(0, 0, getWidth(), getHeight());
         Point2D origin = new Point2D(10, 10);
-        this.scale = (int) (Math.min(getWidth() / columnCount, getHeight() / columnCount) * 0.8);
+        this.scale = (int) (Math.min(getWidth() / getColumnCount(), getHeight() / getRowCount()) * 0.8);
         for (int i = 0; i < columnCount; i++) {
             for (int j = 0; j < rowCount; j++) {
                 getGraphicsContext2D().strokeRect(origin.getX() + (scale * i), origin.getY() + (scale * j), scale, scale);
@@ -35,21 +35,6 @@ public class Grid extends Canvas {
         }
     }
 
-    //Check si la grille est remplie ou pas : renvoie oui ou non
-    public boolean gridIsFull() {
-        int cpt = 0;
-        for (int column = 0; column < columnCount; column++) {
-            for (int row = 0; row < rowCount; row++) {
-                if (grid[column][row] != 0) {
-                    cpt++;
-                }
-            }
-        }
-        return cpt == 16;
-    }
-
-
-    //Getter pour avoir accès à des données
     public int getScale() {
         return scale;
     }

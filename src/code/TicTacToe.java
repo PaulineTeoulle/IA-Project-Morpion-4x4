@@ -10,19 +10,20 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
+//Classe qui décrit le gameplay du TicTacToe
 public class TicTacToe extends Check {
     public Grid grid; //La grille de jeu
-    public Group root; //Pour l'ajouter au Canva
+    public Group root; //Route de la fenêtre (pour l'affichage)
 
     public Human human; //humain
-    public Human human2;
-    public AiRandom AIRandom;
-    public AIMinMax AIMinMax; //ai
-    public AIAlphaBeta AIAlphaBeta;
+    public Human human2; //humain2
+    public AiRandom AIRandom; //ai aléatoire
+    public AIMinMax AIMinMax; //ai minmax
+    public AIAlphaBeta AIAlphaBeta; // ai alphabeta
     public int tour = 2; //Tour de jeu
     public int scale; //ajustement à la fenetre
     public Circle[] shape = new Circle[2]; //Nombre de pions possibles: ici 2
-    private final int gamechoice;
+    private final int gamechoice; //mode de jeu
 
     public TicTacToe(Group root, int gameChoice) {
         this.root = root;
@@ -60,7 +61,7 @@ public class TicTacToe extends Check {
                 root.getScene().heightProperty().divide(1));
     }
 
-    //GamePlay
+    //Gameplay général
     public void gamePlay(MouseEvent mouseEvent) {
         int scale = (int) (Math.min(grid.getWidth() / grid.getColumnCount(), grid.getHeight() / grid.getRowCount()) * 0.8);
         grid.label.setText("");
@@ -86,14 +87,20 @@ public class TicTacToe extends Check {
         }
     }
 
+    private void changeTurn() {
+        tour = (tour % 2) + 1;
+        grid.player = tour;
+    }
+
     private void humanVSaiRandom(MouseEvent mouseEvent, int scale) {
         changeTurn();
+        //Joueur humain
         if (tour == 1) {
             int column = (int) (mouseEvent.getX() / scale);
             int row = (int) (mouseEvent.getY() / scale);
             if (coordsAreNotInGrid(column, row, grid.getColumnCount(), grid.getRowCount())) {
-                System.out.println("Les coordonnées ne sont pas dans la grille");
-                grid.label.setText("Les coordonnées ne sont pas dans la grille");
+                System.out.println("Coords are not in grid");
+                grid.label.setText("Coords are not in grid");
             }
             human.row = row;
             human.column = column;
@@ -105,7 +112,7 @@ public class TicTacToe extends Check {
             }
         }
 
-        //Si l'ia joue
+        //AI random
         if (tour == 2) {
             AIRandom.play();
             //Check de win
@@ -119,21 +126,15 @@ public class TicTacToe extends Check {
         checkDraw();
     }
 
-    private void changeTurn() {
-        tour = (tour % 2) + 1;
-        grid.player = tour;
-    }
-
-
-    //TODO : seulement si cliqué sur bonne case : pas sur l'ia
     private void humanVShuman(MouseEvent mouseEvent, int scale) {
         changeTurn();
+        //Joueur humain1
         if (tour == 1) {
             int column = (int) (mouseEvent.getX() / scale);
             int row = (int) (mouseEvent.getY() / scale);
             if (coordsAreNotInGrid(column, row, grid.getColumnCount(), grid.getRowCount())) {
-                System.out.println("Les coordonnées ne sont pas dans la grille");
-                grid.label.setText("Les coordonnées ne sont pas dans la grille");
+                System.out.println("Coords are not in grid");
+                grid.label.setText("Coords are not in grid");
             }
             human.row = row;
             human.column = column;
@@ -145,13 +146,13 @@ public class TicTacToe extends Check {
             }
         }
 
-        //Si l'ia joue
+        //Joueur humain2
         if (tour == 2) {
             int column = (int) (mouseEvent.getX() / scale);
             int row = (int) (mouseEvent.getY() / scale);
             if (coordsAreNotInGrid(column, row, grid.getColumnCount(), grid.getRowCount())) {
-                System.out.println("Les coordonnées ne sont pas dans la grille");
-                grid.label.setText("Les coordonnées ne sont pas dans la grille");
+                System.out.println("Coords are not in grid");
+                grid.label.setText("Coords are not in grid");
             }
             human2.row = row;
             human2.column = column;
@@ -167,17 +168,15 @@ public class TicTacToe extends Check {
         checkDraw();
     }
 
-
-    //TODO : seulement si cliqué sur bonne case : pas sur l'ia pour l'humain
     private void humanVSaiMinMax(MouseEvent mouseEvent, int scale) {
         changeTurn();
-        //Si l'humain joue
+        //Joueur humain
         if (tour == 1) {
             int column = (int) (mouseEvent.getX() / scale);
             int row = (int) (mouseEvent.getY() / scale);
             if (coordsAreNotInGrid(column, row, grid.getColumnCount(), grid.getRowCount())) {
-                System.out.println("Les coordonnées ne sont pas dans la grille");
-                grid.label.setText("Les coordonnées ne sont pas dans la grille");
+                System.out.println("Coords are not in grid");
+                grid.label.setText("Coords are not in grid");
             }
             human.row = row;
             human.column = column;
@@ -189,7 +188,7 @@ public class TicTacToe extends Check {
             }
         }
 
-        //Si l'ia joue
+        //AI MinMax
         if (tour == 2) {
             AIMinMax.play();
             //Check de win
@@ -203,9 +202,9 @@ public class TicTacToe extends Check {
         checkDraw();
     }
 
-    //TODO : seulement si cliqué sur bonne case : pas sur l'ia pour l'humain
     private void humanVSaiAlphaBeta(MouseEvent mouseEvent, int scale) {
         changeTurn();
+        //Joueur humain
         if (tour == 1) {
             int column = (int) (mouseEvent.getX() / scale);
             int row = (int) (mouseEvent.getY() / scale);
@@ -223,6 +222,7 @@ public class TicTacToe extends Check {
             }
         }
 
+        //AI AlphaBeta
         if (tour == 2) {
             AIAlphaBeta.play();
             //Check de win
@@ -238,6 +238,7 @@ public class TicTacToe extends Check {
 
     private void AiMinMaxVSAiAlphaBeta() {
         changeTurn();
+        //AI MinMax
         if (tour == 1) {
             AIMinMax.play();
             //Check de win
@@ -248,7 +249,7 @@ public class TicTacToe extends Check {
             }
         }
 
-        //Si l'ia joue
+        //AI AlphaBeta
         if (tour == 2) {
             AIAlphaBeta.play();
             //Check de win

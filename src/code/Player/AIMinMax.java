@@ -4,20 +4,21 @@ import code.Cell;
 import code.Windows.Circle;
 import code.Grid;
 import code.TicTacToe;
-
 import java.util.*;
 
-//Classe d'IA qui étend la super class Player
+//Classe d'IA MinMax
 public class AIMinMax extends Player {
     private final int gameChoice;
     private int symbol;
+    private final int profondeur;
 
     public AIMinMax(Grid grid, Circle circle, TicTacToe ticTacToe, int gameChoice) {
         super(grid, circle, ticTacToe);
         this.gameChoice = gameChoice;
+        this.profondeur = 3;
     }
 
-    //Manière de jouer
+    //Placement du pion
     @Override
     public void play() {
         if (gameChoice == 2) {
@@ -26,7 +27,7 @@ public class AIMinMax extends Player {
             symbol = 1;
         }
         long tempsDebut = System.currentTimeMillis();
-        Cell bestCell = minMax(grid, 7, symbol);
+        Cell bestCell = minMax(grid,  symbol);
         System.out.println("Best Cell : " + bestCell.toString());
         grid.grid[bestCell.column][bestCell.row] = symbol;
         super.circle.paint(grid.getGraphicsContext2D(), bestCell.column, bestCell.row, grid.getScale());
@@ -49,7 +50,9 @@ public class AIMinMax extends Player {
         return list;
     }
 
-    private Cell minMax(Grid grid, int profondeur, int symbol) {
+
+    //Algorithme MinMax qui pour chaque case disponible, évalue son score et renvoie la meilleure solution possible
+    private Cell minMax(Grid grid, int symbol) {
         int bestScoreMax = -1000;
         ArrayList<Cell> list = new ArrayList<>();
         ArrayList<Cell> possibleMoves = getPossibleMooves();
@@ -81,17 +84,16 @@ public class AIMinMax extends Player {
         return list.get(0);
     }
 
+    //Retourne la valeur maximum des cases disponibles
     private int Max(int profondeur, int joueur, int joueurEnCours) {
         if (joueur == 1) {
             joueur = 2;
         } else {
             joueur = 1;
         }
-
         if (profondeur == 0 || checkHumanWin(grid) || checkIaWin(grid) || isDraw(grid)) {
             return evaluateTerminalTest(joueurEnCours, profondeur, symbol, grid);
         }
-
         int max = -1000;
         for (int column = 0; column < grid.getColumnCount(); column++) {
             for (int row = 0; row < grid.getRowCount(); row++) {
@@ -108,6 +110,7 @@ public class AIMinMax extends Player {
         return max;
     }
 
+    //Retourne la valeur minimum des cases disponibles
     private int Min(int profondeur, int joueur, int joueurEnCours) {
         if (joueur == 1) {
             joueur = 2;

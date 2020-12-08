@@ -42,10 +42,8 @@ public class TicTacToeWindows implements GameInterface {
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.TOP_CENTER);
         Button restartButton = new Button("Restart");
-        Button backButton = new Button("Back");
-        backButton.setOnAction(actionEvent -> backButton.getScene().setRoot(root));
         restartButton.setOnMouseClicked(this::restart);
-        hBox.getChildren().addAll(restartButton, backButton);
+        hBox.getChildren().addAll(restartButton);
 
         VBox vBox = new VBox();
         vBox.setPadding(new Insets(50, 50, 50, 50));

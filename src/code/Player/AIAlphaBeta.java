@@ -7,17 +7,21 @@ import code.TicTacToe;
 
 import java.util.*;
 
-//Classe d'IA qui étend la super class Player
+//Classe d'IA AlphaBeta
 public class AIAlphaBeta extends Player {
 
     private final int gameChoice;
     private int symbol;
+    private final int profondeur;
 
     public AIAlphaBeta(Grid grid, Circle circle, TicTacToe ticTacToe, int gameChoice) {
         super (grid, circle, ticTacToe);
         this.gameChoice = gameChoice;
+        this.profondeur = 3;
     }
 
+    //Placement du pion
+    @Override
     public void play() {
         if(gameChoice ==3){
             symbol = 2;
@@ -26,7 +30,7 @@ public class AIAlphaBeta extends Player {
             symbol = 2;
         }
         long tempsDebut = System.currentTimeMillis();
-        Cell bestCell = AlphaBeta(grid,7, symbol);
+        Cell bestCell = AlphaBeta(grid, symbol);
         System.out.println("Best Cell : " + bestCell.toString());
         grid.grid[bestCell.column][bestCell.row] = symbol;
         super.circle.paint(grid.getGraphicsContext2D(), bestCell.column, bestCell.row, grid.getScale());
@@ -47,7 +51,8 @@ public class AIAlphaBeta extends Player {
         return list;
     }
 
-    private Cell AlphaBeta(Grid grid,int profondeur, int symbol) {
+    //Algorithme AlphaBeta qui pour chaque case disponible, évalue son score et renvoie la meilleure solution possible
+    private Cell AlphaBeta(Grid grid, int symbol) {
         ArrayList<Cell> list = new ArrayList<>();
         int alpha = -1000;
         int beta = 1000;
@@ -66,27 +71,24 @@ public class AIAlphaBeta extends Player {
                         System.out.println("Eval : " +  eval);
                     }
                     grid.grid[cell.column][cell.row] = 0;
-
                 }
             }
 
         System.out.println("List of choice : " + list);
         Collections.shuffle(list);
         return list.get(0);
-
     }
 
+    //Retourne la valeur maximum des cases disponibles
     private int MaxAlphaBeta(int profondeur, int joueur, int joueurEnCours, int alpha, int beta) {
         if (joueur == 1) {
             joueur = 2;
         } else {
             joueur = 1;
         }
-
         if (profondeur == 0 || checkHumanWin(grid) || checkIaWin(grid) || isDraw(grid)) {
             return evaluateTerminalTest(joueurEnCours, profondeur, symbol, grid);
         }
-
         for (int column = 0; column < grid.getColumnCount(); column++) {
             for (int row = 0; row < grid.getRowCount(); row++) {
                 if (cellIsEmpty(this.grid, column, row)) {
@@ -106,6 +108,7 @@ public class AIAlphaBeta extends Player {
         return alpha;
     }
 
+    //Retourne la valeur minimum des cases disponibles
     private int MinAlphaBeta(int profondeur, int joueur, int joueurEnCours, int alpha, int beta) {
         if (joueur == 1) {
             joueur = 2;
@@ -115,7 +118,6 @@ public class AIAlphaBeta extends Player {
         if (profondeur == 0 || checkHumanWin(grid) || checkIaWin(grid) || isDraw(grid)) {
             return evaluateTerminalTest(joueurEnCours, profondeur,symbol, grid);
         }
-
         for (int column = 0; column < grid.getColumnCount(); column++) {
             for (int row = 0; row < grid.getRowCount(); row++) {
                 if (cellIsEmpty(this.grid, column, row)) {
@@ -130,7 +132,6 @@ public class AIAlphaBeta extends Player {
                     if(beta <= alpha){
                         return alpha;
                     }
-
                 }
             }
         }
